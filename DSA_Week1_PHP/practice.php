@@ -44,13 +44,14 @@ function firstNonRepeatingChar($str)
         }
     }
 
-    for ($i = 0; $i < count($occurences); $i++) {
+    for ($i = 0; $i < $strLen; $i++) {
         $char = $str[$i];
         if ($occurences[$char] === 1) {
             return $char;
         }
     }
-    return $occurences;
+
+    return null;
 }
 
 print_r(firstNonRepeatingChar("programming"));
@@ -97,4 +98,7 @@ $merged = mergeIntervals($intervals);
 print_r($merged);
 
 echo PHP_EOL;
+
+
+
 

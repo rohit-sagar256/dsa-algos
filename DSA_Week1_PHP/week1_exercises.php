@@ -566,3 +566,185 @@ for ($i = 0; $i < count($input) - 1; $i++) {
 }
 var_dump($checksSum);
 echo PHP_EOL;
+
+
+/**
+ * Challenge 25: Group by First Letter
+ * Group a list of words by their first letter into an associative array.
+ * [
+ * "a" => ["apple", "apricot", "avocado"],
+ * "b" => ["banana", "blueberry"],
+ * "c" => ["cherry"]
+ * ]
+ */
+$input = ["apple", "banana", "apricot", "cherry", "blueberry", "avocado"];
+
+$grouped = [];
+foreach ($input as $key => $value) {
+    $firstLetter = $value[0];
+    if (!isset($grouped[$firstLetter])) {
+        $grouped[$firstLetter] = [];
+    }
+    $grouped[$firstLetter][] = $value;
+}
+
+
+print_r($grouped);
+echo PHP_EOL;
+
+
+/**
+ * Challenge 25: Palindrome Checker for Array of Words
+ * Write a function that takes an array of words and returns only the ones that are palindromes (i.e., read the same backward as forward).
+ * Output: ["level", "radar", "madam"]
+ */
+
+$input = ["level", "world", "radar", "hello", "madam"];
+
+$palindromes = array_filter($input, function ($i) {
+    $normalized = strtolower(str_replace(" ", "", trim($i)));
+    return $normalized === strrev($normalized);
+});
+
+
+print_r(array_values($palindromes));
+echo PHP_EOL;
+
+/**
+ * Challenge 26: Matrix Diagonal Sum
+ * You are given a 2D square matrix (an array of arrays). Write a function to compute the sum of both diagonals.
+ * Output: 1 + 5 + 9 (main diagonal) + 3 + 5 + 7 (anti-diagonal) = 30
+ * But if the matrix has an odd length, make sure not to double-count the middle element (5 in this case).
+ */
+$matrix = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+];
+
+function sumMatrixDiag($matrix)
+{
+    $matrixLength = count($matrix);
+    $sum = 0;
+
+    for ($i = 0; $i < $matrixLength; $i++) {
+        $sum += $matrix[$i][$i];
+        $sum += $matrix[$i][$matrixLength - 1 - $i];
+    }
+
+    if ($matrixLength % 2 == 1) {
+        $middleIndex = floor($matrixLength / 2);
+        $sum -= $matrix[$middleIndex][$middleIndex];
+    }
+
+    return $sum;
+}
+
+print_r(sumMatrixDiag($matrix));
+echo PHP_EOL;
+
+
+/**
+ * Challenge 26: Flatten a Nested Array
+ * Write a function that flattens a multi-dimensional array into a single-dimensional one.
+ * Output: [1, 2, 3, 4, 5, 6, 7]
+ */
+$input = [1, [2, 3], [4, [5, 6]], 7];
+
+function flattenAnyArray(array $array)
+{
+    $flat = [];
+
+    foreach ($array as $value) {
+        if (is_array($value)) {
+            $flat = array_merge($flat, flattenAnyArray($value));
+        } else {
+            $flat[] = $value;
+        }
+    }
+
+    return $flat;
+}
+
+
+print_r(flattenAnyArray($input));
+echo PHP_EOL;
+
+
+/**
+ * Challenge 26: Longest Word in Sentence
+ * Write a function that finds the longest word in a given sentence.
+ * Ignore punctuation and assume words are separated by spaces.
+ */
+$string = "The quick brown fox, jumped over the lazy dog!";
+function longestString(string $string)
+{
+    $normalizedString = explode(" ", str_replace(['/', '.', '"', "'", ",", "!"], "", strtolower($string)));
+    $longest = "";
+
+    foreach ($normalizedString as $word) {
+        if (strlen($word) > strlen($longest)) {
+            $longest = $word;
+        }
+    }
+    return $longest;
+}
+
+print_r(longestString($string));
+echo PHP_EOL;
+
+
+/**
+ * Challenge 27: Anagram Checker
+ * Write a function that checks if two strings are anagrams of each other (i.e., contain the same letters in different orders).
+ *
+ */
+
+$str1 = "listen";
+$str2 = "silent";
+
+function checkTwoStringsAnagram(string $str1, string $str2)
+{
+    $is_anagram = false;
+    $normalize = function ($str) {
+        $str = strtolower($str);
+        $str = preg_replace("/[^a-z]/", "", $str);
+        $chars = str_split($str);
+        sort($chars);
+        return implode('', $chars);
+    };
+
+    return $normalize($str1) === $normalize($str2);
+}
+
+print_r(checkTwoStringsAnagram($str1, $str2));
+echo PHP_EOL;
+
+
+/**
+ * Challenge 28: Group Anagrams
+ * Task: Write a function that groups anagrams from a list of words.
+ * output = [
+ * ["listen", "silent", "enlist"],
+ * ["google", "gooegl"],
+ * ["abc", "cab"]
+ * ]
+ */
+
+$input = ["listen", "silent", "enlist", "google", "gooegl", "abc", "cab"];
+
+function groupAnagrams(array $words): array
+{
+    $groups = [];
+    foreach ($words as $word) {
+        $chars = str_split(strtolower($word));
+        sort($chars);
+        $key = implode('', $chars);
+
+        $groups[$key][] = $word;
+    }
+    return array_values($groups);
+}
+
+print_r(groupAnagrams($input));
+echo PHP_EOL;
