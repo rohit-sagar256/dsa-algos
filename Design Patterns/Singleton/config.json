@@ -1,0 +1,11 @@
+{
+  "app_name": "Mviper",
+  "version": "1.0.0",
+  "debug": true,
+  "database": {
+    "mysql":{
+      "host": "localhost",
+      "port": 3306
+    }
+  }
+}

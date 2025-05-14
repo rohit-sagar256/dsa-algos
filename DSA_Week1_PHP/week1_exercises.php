@@ -609,6 +609,8 @@ $palindromes = array_filter($input, function ($i) {
 
 print_r(array_values($palindromes));
 echo PHP_EOL;
+echo PHP_EOL;
+echo PHP_EOL;
 
 /**
  * Challenge 26: Matrix Diagonal Sum

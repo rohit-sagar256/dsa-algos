@@ -1,0 +1,5 @@
+{
+  "stripe": "sk_test_abc123",
+  "openai": "sk_openai_xyz987",
+  "mailgun": "key-mailgun-456"
+}
